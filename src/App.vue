@@ -60,6 +60,9 @@ export default {
     deleteTask(id) {
       if (confirm("Do you want to delete the task?")) {
         this.tasks = this.tasks.filter((item) => item.id != id);
+        if (this.formTask?.id == id){
+            this.formTask = undefined;
+        }
       }
     },
     editTask(id) {
