@@ -1,25 +1,27 @@
 <template>
-  <Subtitle v-if="formTask">#{{ formTask?.id }}</Subtitle>
-  <form @submit="onSubmit" class="w-100">
-    <input
-      placeholder="content"
-      type="text"
-      class="form-control mb-2"
-      v-model="text"
-    />
-    <div class="custom-control custom-checkbox">
+  <div>
+    <Subtitle v-if="formTask">#{{ formTask?.id }}</Subtitle>
+    <form @submit="onSubmit" class="w-100">
       <input
-        type="checkbox"
-        class="custom-control-input"
-        id="reminder"
-        v-model="reminder"
+        placeholder="content"
+        type="text"
+        class="form-control mb-2"
+        v-model="text"
       />
-      <label class="custom-control-label" for="reminder">Reminder</label>
-    </div>
-    <div class="text-right">
-      <Button :type="'submit'" :color="'dark'" :size="'sm'">Submit</Button>
-    </div>
-  </form>
+      <div class="custom-control custom-checkbox">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          id="reminder"
+          v-model="reminder"
+        />
+        <label class="custom-control-label" for="reminder">Reminder</label>
+      </div>
+      <div class="text-right">
+        <Button :type="'submit'" :color="'dark'" :size="'sm'">Submit</Button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -44,14 +46,14 @@ export default {
     onSubmit(e) {
       e.preventDefault();
       const task = {
-        id: this.formTask?.id || Helper.genRandId(),
+        id: this.formTask?.id,
         text: this.text,
         reminder: this.reminder,
       };
 
       if (task.text.trim() == "") {
-          alert('Text must be not empty!');
-          return;
+        alert("Text must be not empty!");
+        return;
       }
       // add form => reset
       if (!this.formTask) {
