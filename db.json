@@ -1,19 +1,29 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "text": "456",
-      "reminder": true
+      "text": "Learn vuex",
+      "reminder": true,
+      "id": 1
     },
     {
-      "id": 2,
-      "text": "123",
-      "reminder": true
+      "text": "play badminton with grandma",
+      "reminder": true,
+      "id": 2
     },
     {
-      "text": "123",
+      "text": "running",
       "reminder": true,
       "id": 3
+    },
+    {
+      "text": "learn react with typescript",
+      "reminder": true,
+      "id": 4
+    },
+    {
+      "text": "learn svelte js",
+      "reminder": true,
+      "id": 5
     }
   ]
 }

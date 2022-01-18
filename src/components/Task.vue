@@ -8,15 +8,15 @@
       mb-2
     "
     :class="[task.reminder ? 'reminder' : '']"
-    @dblclick="$emit('toggle-reminder', task.id)"
+    @dblclick="toggleReminder"
   >
     {{ task.text }}
     <div>
-      <Button @btn-click="$emit('edit-task')" :color="'success'" :size="'sm'">
+      <Button @btn-click="onEdit" :color="'success'" :size="'sm'">
         <i class="fas fa-pencil"></i>
       </Button>
       <Button
-        @btn-click="$emit('delete-task')"
+        @btn-click="onDelete"
         :color="'danger'"
         :btnClass="'ml-2'"
         :size="'sm'"
@@ -29,11 +29,35 @@
 
 <script>
 import Button from "./Button.vue";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: { Button },
-  emits: ['delete-task', 'edit-task', 'toggle-reminder'],
+  methods: {
+    ...mapActions([
+      "deleteTask",
+      "toggleTaskReminder",
+      "setFormTask",
+      "toggleTaskForm",
+    ]),
+    onDelete() {
+      if (confirm("Do you want to delete this item?")) {
+        this.deleteTask(this.task.id);
+      }
+    },
+    onEdit() {
+      this.setFormTask(this.task);
+        console.log('form task', this.formTask)
+      if (!this.showTaskForm) this.toggleTaskForm();
+    },
+    toggleReminder() {
+      this.toggleTaskReminder(this.task.id);
+    },
+  },
   props: {
     task: Object,
+  },
+  computed: {
+    ...mapGetters(["showTaskForm"]),
   },
 };
 </script>
@@ -41,7 +65,7 @@ export default {
 <style scoped>
 li {
   border-radius: 5px;
-  cursor:pointer;
+  cursor: pointer;
   user-select: none;
 }
 .reminder {

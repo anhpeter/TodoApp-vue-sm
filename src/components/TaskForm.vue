@@ -26,8 +26,8 @@
 
 <script>
 import Button from "./Button.vue";
-import { Helper } from "../common/helpers/Helper";
 import Subtitle from "./Subtitle.vue";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: { Button, Subtitle },
   data: () => {
@@ -36,13 +36,8 @@ export default {
       reminder: false,
     };
   },
-  props: {
-    formTask: {
-      type: Object,
-      default: undefined,
-    },
-  },
   methods: {
+    ...mapActions(["addTask", 'updateTask']),
     onSubmit(e) {
       e.preventDefault();
       const task = {
@@ -57,10 +52,10 @@ export default {
       }
       // add form => reset
       if (!this.formTask) {
-        this.$emit("add-task", task);
+        this.addTask(task);
         this.onReset();
       } else {
-        this.$emit("update-task", task);
+          this.updateTask(task);
       }
     },
     handleFormTask(task) {
@@ -75,6 +70,9 @@ export default {
       this.text = "";
       this.reminder = false;
     },
+  },
+  computed: {
+      ...mapGetters(['formTask']),
   },
   watch: {
     formTask: {

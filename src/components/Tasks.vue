@@ -1,13 +1,11 @@
 <template>
-  <ul class="list-group w-100">
-    <template v-if="isTaskEmpty">
-      <div class="alert alert-primary" role="alert">No task</div>
-    </template>
+  <div class="text-center"  v-if="tasksStatus == 'loading'"> loading ... </div>
+  <ul v-else class="list-group w-100">
+    <div v-if="isTaskEmpty" class="alert alert-primary" role="alert">
+      No task
+    </div>
     <Task
       v-else
-      @edit-task="$emit('edit-task', task.id)"
-      @delete-task="$emit('delete-task', task.id)"
-      @toggle-reminder="(id) => $emit('toggle-reminder', id)"
       v-for="task in tasks"
       v-bind:key="task.id"
       :task="task"
@@ -17,6 +15,7 @@
 
 <script>
 import Task from "./Task.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: { Task },
@@ -24,6 +23,7 @@ export default {
     tasks: [Object],
   },
   computed: {
+    ...mapGetters(["tasksStatus"]),
     isTaskEmpty() {
       return this.tasks.length == 0;
     },

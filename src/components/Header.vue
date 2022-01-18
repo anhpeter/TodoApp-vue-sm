@@ -2,7 +2,7 @@
   <header class="header">
     <Title :content="'Tasks'" />
     <Button
-      @btn-click="$emit('toggle-add-task')"
+      @btn-click="toggleTaskForm"
       :color="showTaskForm ? 'danger' : 'primary'"
       >{{ showTaskForm ? "Close" : "Add task" }}</Button
     >
@@ -12,14 +12,16 @@
 <script>
 import Button from "./Button.vue";
 import Title from "./Title.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: { Title, Button },
-  props: {
-    showTaskForm: {
-      type: Boolean,
-      default: false,
-    },
+  methods: {
+      ...mapActions(['toggleTaskForm']),
   },
+  computed: {
+      ...mapGetters(['showTaskForm']),
+  }
+
 };
 </script>
 
